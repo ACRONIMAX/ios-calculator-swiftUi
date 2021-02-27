@@ -7,102 +7,94 @@
 
 import SwiftUI
 
-struct ContentView: View {
-    let rows: Int = 5
-    var body: some View {
-        VStack(alignment: .center, spacing: 10) {
-            HStack() {
-                Button(action: {}, label: {
-                    Text("4")
-                        .bold()
-                        .font(.largeTitle)
-                        .foregroundColor(.white)
-                        .foregroundColor(.white)
-                        .frame(width: 80, height: 80)
-                        .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color.gray/*@END_MENU_TOKEN@*/)
-                        .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
-                })
-                Button(action: {}, label: {
-                    Text("5")
-                        .bold()
-                        .font(.largeTitle)
-                        .foregroundColor(.white)
-                        .foregroundColor(.white)
-                        .frame(width: 80, height: 80)
-                        .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color.gray/*@END_MENU_TOKEN@*/)
-                        .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
-                })
-                Button(action: {}, label: {
-                    Text("6")
-                        .bold()
-                        .font(.largeTitle)
-                        .foregroundColor(.white)
-                        .foregroundColor(.white)
-                        .frame(width: 80, height: 80)
-                        .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color.gray/*@END_MENU_TOKEN@*/)
-                        .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
-                })
-                Button(action: {}, label: {
-                    Text(Image(systemName: "minus"))
-                        .bold()
-                        .font(.largeTitle)
-                        .foregroundColor(.white)
-                        .foregroundColor(.white)
-                        .padding()
-                        .frame(width: 80, height: 80)
-                        .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color.gray/*@END_MENU_TOKEN@*/)
-                        .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
-                })
-            }
-            .frame(maxWidth: .infinity)
-            HStack() {
-                Button(action: {}, label: {
-                    Text("1")
-                        .bold()
-                        .font(.largeTitle)
-                        .foregroundColor(.white)
-                        .foregroundColor(.white)
-                        .frame(width: 80, height: 80)
-                        .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color.gray/*@END_MENU_TOKEN@*/)
-                        .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
-                })
-                Button(action: {}, label: {
-                    Text("2")
-                        .bold()
-                        .font(.largeTitle)
-                        .foregroundColor(.white)
-                        .foregroundColor(.white)
-                        .frame(width: 80, height: 80)
-                        .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color.gray/*@END_MENU_TOKEN@*/)
-                        .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
-                })
-                Button(action: {}, label: {
-                    Text("3")
-                        .bold()
-                        .font(.largeTitle)
-                        .foregroundColor(.white)
-                        .foregroundColor(.white)
-                        .frame(width: 80, height: 80)
-                        .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color.gray/*@END_MENU_TOKEN@*/)
-                        .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
-                })
-                Button(action: {}, label: {
-                    Text(Image(systemName: "plus"))
-                        .bold()
-                        .font(.largeTitle)
-                        .foregroundColor(.white)
-                        .foregroundColor(.white)
-                        .frame(width: 80, height: 80)
-                        .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color.gray/*@END_MENU_TOKEN@*/)
-                        .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
-                })
-            }
-            .frame(maxWidth: .infinity)
+enum CalculatorButton: String {
+    case zero, one, two, three, four, five, six, seven, eight, nine
+    case equals, plus, minus, multiply, decimal
+    case ac, plusMinus, percent, divide
+    
+    var buttonTitle: String {
+        switch self {
+        case .zero: return "0"
+        case .one: return "1"
+        case .two: return "2"
+        case .three: return "3"
+        case .four: return "4"
+        case .five: return "5"
+        case .six: return "6"
+        case .seven: return "7"
+        case .eight: return "8"
+        case .nine: return "9"
+        case .decimal: return "."
+        case .plusMinus: return "+/-"
+        case .percent: return "%"
+        case .multiply: return "X"
+        case .divide: return "/"
+        case .minus: return "-"
+        case .plus: return "+"
+        case .equals: return "="
+        default:
+            return "AC"
         }
-        .padding(.horizontal)
-        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-        .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color.black/*@END_MENU_TOKEN@*/)
-        
+    }
+    
+    var buttonColor: Color {
+        switch self {
+        case .zero, .one, .two, .three, .four, .five, .six, .seven, .eight, .nine, .decimal:
+            return Color(.darkGray)
+        case .ac, .plusMinus, .percent:
+            return Color(.lightGray)
+        default:
+            return .orange
+        }
+    }
+}
+
+struct ContentView: View {
+    let buttons: [[CalculatorButton]] = [
+        [.ac, .plusMinus, .percent, .divide],
+        [.seven, .eight, .nine, .multiply],
+        [.four, .five, .six, .minus],
+        [.one, .two, .three, .plus],
+        [.zero, .decimal, .equals]
+    ]
+    
+    var body: some View {
+        ZStack (alignment: .bottom) {
+            Color.black.edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
+            VStack (spacing: 12) {
+                HStack {
+                    Spacer()
+                    Text("42")
+                        .foregroundColor(.white)
+                        .font(.system(size: 64))
+                }.padding()
+                
+                ForEach(buttons, id: \.self) { row in
+                    HStack (spacing: 12) {
+                        ForEach(row, id: \.self) { button in
+                            Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                                Text(button.buttonTitle)
+                                    .font(.system(size: 32))
+                                    .frame(
+                                        width: self.getButtonsSize(button: button),
+                                        height: (UIScreen.main.bounds.width - 5 * 12) / 4
+                                    )
+                                    .foregroundColor(.white)
+                                    .background(button.buttonColor)
+                                    .cornerRadius(self.getButtonsSize(button: button))
+                            })
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    func getButtonsSize(button: CalculatorButton) -> CGFloat {
+        if button == .zero {
+            return (UIScreen.main.bounds.width - 4 * 12) / 4 * 2
+        }
+        return (UIScreen.main.bounds.width - 5 * 12) / 4
     }
 }
 
